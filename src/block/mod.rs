@@ -159,7 +159,12 @@ pub fn compress_to_buffer(
     Ok(written_size as usize)
 }
 
-fn get_decompressed_size(src: &[u8], uncompressed_size: Option<i32>) -> Result<usize> {
+/// Returns the uncompressed size of the buffer.
+///
+/// # Errors
+/// Returns std::io::Error with ErrorKind::InvalidInput if the src buffer does not contain a positive
+/// size less than the max compression bound.
+pub fn get_decompressed_size(src: &[u8], uncompressed_size: Option<i32>) -> Result<usize> {
     let size;
 
     if let Some(s) = uncompressed_size {
